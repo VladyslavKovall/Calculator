@@ -1,6 +1,5 @@
 const display = document.getElementById("display");
-const buttons = document.querySelectorAll("button");
-
+const buttons = document.querySelector(".buttons");
 let currentInput = "";
 let result = "";
 
@@ -45,29 +44,28 @@ function calculate(expression) {
 }
 
 // Логіка обробки натискань на кнопки
-buttons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const value = button.textContent;
-    if (value === "C") {
-      currentInput = "";
-      display.textContent = "0";
-    } else if (value === "=") {
-      const firstChar = currentInput[0];
+buttons.addEventListener("pointerdown", (e) => {
+  if (!e.target.matches("button")) {return;}
+  const value = e.target.textContent;
 
-      if (firstChar === "*" || firstChar === "/") {
-        display.textContent = "Error";
-        return;
-      }
-      result = calculate(currentInput);
-      display.textContent = result;
-      currentInput = result.toString();
-    } else if (value === "⌫") {
-      currentInput = currentInput.slice(0, -1);
-      display.textContent = currentInput || "0";
-    } else {
-      if (display.textContent === "0") {display.textContent = "";}
-      currentInput += value;
-      display.textContent += value;
+  if (value === "C") {
+    currentInput = "";
+    display.textContent = "0";
+  } else if (value === "=") {
+    const firstChar = currentInput[0];
+    if (firstChar === "*" || firstChar === "/") {
+      display.textContent = "Error";
+      return;
     }
-  });
+    result = calculate(currentInput);
+    display.textContent = result;
+    currentInput = result.toString();
+  } else if (value === "⌫") {
+    currentInput = currentInput.slice(0, -1);
+    display.textContent = currentInput || "0";
+  } else {
+    if (display.textContent === "0") {display.textContent = "";}
+    currentInput += value;
+    display.textContent += value;
+  }
 });
