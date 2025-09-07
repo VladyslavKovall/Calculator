@@ -2,6 +2,7 @@ const display = document.getElementById("display");
 const buttons = document.querySelector(".buttons");
 let currentInput = "";
 let result = "";
+const operators = ["+", "-", "*", "/","."];
 
 const add = (a, b) => a + b;
 const multiply = (a, b) => a * b;
@@ -44,6 +45,7 @@ function calculate(expression) {
 }
 
 // Логіка обробки натискань на кнопки
+
 buttons.addEventListener("pointerdown", (e) => {
   if (!e.target.matches("button")) {return;}
   const value = e.target.textContent;
@@ -52,11 +54,15 @@ buttons.addEventListener("pointerdown", (e) => {
     currentInput = "";
     display.textContent = "0";
   } else if (value === "=") {
+    if (!currentInput) {return;}
     const firstChar = currentInput[0];
+
     if (firstChar === "*" || firstChar === "/") {
       display.textContent = "Error";
+      currentInput = "";
       return;
     }
+
     result = calculate(currentInput);
     display.textContent = result;
     currentInput = result.toString();
@@ -64,8 +70,16 @@ buttons.addEventListener("pointerdown", (e) => {
     currentInput = currentInput.slice(0, -1);
     display.textContent = currentInput || "0";
   } else {
+    const lastChar = currentInput[currentInput.length - 1];
+    if (operators.includes(lastChar) && operators.includes(value)) {
+      display.textContent = "Error";
+      currentInput = "";
+      return;
+    }
+
     if (display.textContent === "0") {display.textContent = "";}
     currentInput += value;
     display.textContent += value;
   }
 });
+
