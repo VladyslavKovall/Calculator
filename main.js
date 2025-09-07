@@ -72,8 +72,6 @@ buttons.addEventListener("pointerdown", (e) => {
   } else {
     const lastChar = currentInput[currentInput.length - 1];
     if (operators.includes(lastChar) && operators.includes(value)) {
-      display.textContent = "Error";
-      currentInput = "";
       return;
     }
     if (!currentInput && value !== "-" && operators.includes(value)) {
