@@ -76,6 +76,9 @@ buttons.addEventListener("pointerdown", (e) => {
       currentInput = "";
       return;
     }
+    if (!currentInput && value !== "-" && operators.includes(value)) {
+      return; 
+    }
 
     if (display.textContent === "0") {display.textContent = "";}
     currentInput += value;
