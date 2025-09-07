@@ -8,6 +8,8 @@ const add = (a, b) => a + b;
 const multiply = (a, b) => a * b;
 const divide = (a, b) => a / b;
 const subtraction = (a, b) => a - b;
+
+// Парсить вираз та обчислює дотримуючись порядку дій
 function calculate(expression) {
   const tokens = expression.match(/\d+(\.\d+)?|[+\-*/]/g);
   const firstElem = tokens[0];
@@ -17,6 +19,8 @@ function calculate(expression) {
   if (firstElem === "-") {
     tokens.splice(0, 2, "-" + tokens[1]);
   }
+
+  // Шукаємо в масиві "*" або "/" і виконуємо з ними обчислення
   for (let i = 0; i < tokens.length; i++) {
     if (tokens[i] === "*" || tokens[i] === "/") {
       const a = parseFloat(tokens[i - 1]);
@@ -40,6 +44,7 @@ function calculate(expression) {
   return parseFloat(tokens[0]);
 }
 
+// Логіка обробки натискань на кнопки
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     const value = button.textContent;
