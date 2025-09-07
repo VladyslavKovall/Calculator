@@ -6,6 +6,10 @@ body {
   background: #f0f0f0;
   font-family: Arial, sans-serif;
 }
+html {
+-ms-touch-action: manipulation;
+touch-action: manipulation;
+}
 .calculator {
   width: 260px;
   background: #222;
